@@ -9,6 +9,10 @@ label 'nodejsslave'
 }
 */
 
+parameters {
+  choice choices: ['Master', 'Development', 'QA', 'Test'], description: 'Select Branch Name', name: 'BranchName'
+}
+
 tools{
 maven 'maven3.8.6'
 }
@@ -23,11 +27,11 @@ pollSCM('* * * * *')
 }
 
 options{
+//Discard older builds
 buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5'))
 
 //built-in function for adding timestamp in build info(console output)
-
-timestamps()
+  timestamps()
 }
 
 stages{
